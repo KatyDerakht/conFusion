@@ -11,11 +11,13 @@ import { MatToolbarModule, MatCardModule, MatGridListModule } from
 '@angular/material';
 
 import { MaterialModule } from './material.module';
+import { DishdetailComponent } from './dishdetail/dishdetail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
+    DishdetailComponent,
     
   ],
   imports: [
