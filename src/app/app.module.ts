@@ -1,3 +1,4 @@
+import { PromotionService } from './services/promotion.service';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -24,6 +25,8 @@ import { ContactComponent } from './contact/contact.component';
 
 
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +36,8 @@ import { ContactComponent } from './contact/contact.component';
     FooterComponent,
     HomeComponent,
     AboutComponent,
-    ContactComponent,
+    ContactComponent
+    //,AppRoutingModule ////////////////My Problem
     
   ],
   imports: [
@@ -49,7 +53,8 @@ import { ContactComponent } from './contact/contact.component';
     
   ],
   providers: 
-  [DishService
+  [DishService ,PromotionService
+    //,{provide: 'BaseURL', useValue: baseURL}
   ],
   bootstrap: [AppComponent]
 })

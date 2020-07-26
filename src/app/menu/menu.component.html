@@ -14,9 +14,7 @@
 
 </div> -->
 
-<div class="container"
-     fxLayout="column"
-     fxLayoutGap="10px">
+<div class="container" fxLayout="column" fxLayoutGap="10px">
 
   <div fxFlex>
     <div>
@@ -27,11 +25,11 @@
   </div>
   <mat-divider></mat-divider>
 
-  
-  
+
+
   <div fxFlex>
     <mat-grid-list cols="2" rowHeight="200px" class="grid-layout-custom">
-      <mat-grid-tile *ngFor="let dish of dishes" (click)="onSelect(dish)">
+      <mat-grid-tile *ngFor="let dish of dishes" [routerLink]="['/dishdetail',dish.id]">
         <img height="200px" src={{dish.image}} alt={{dish.name}}>
         <mat-grid-tile-footer>
           <h1>{{dish.name | uppercase}}</h1>
@@ -42,7 +40,7 @@
 
 </div>
 
-<app-dishdetail [dish] ="selectedDish"></app-dishdetail>
+<!-- <app-dishdetail [dish] ="selectedDish"></app-dishdetail> -->
 
 <!-- <div fxFlex *ngIf="selectedDish">
   <mat-card>
