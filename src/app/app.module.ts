@@ -1,3 +1,6 @@
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { PromotionService } from "./services/promotion.service";
 import { AppRoutingModule } from "./app-routing/app-routing.module";
 import { BrowserModule } from "@angular/platform-browser";
@@ -28,9 +31,13 @@ import { FooterComponent } from "./footer/footer.component";
 import { HomeComponent } from "./home/home.component";
 import { AboutComponent } from "./about/about.component";
 import { ContactComponent } from "./contact/contact.component";
+import {FormsModule} from '@angular/forms';
 
 import { LeaderService } from "./services/leader.service";
 import { LoginComponent } from "./login/login.component";
+
+
+
 
 @NgModule({
   declarations: [
@@ -55,7 +62,10 @@ import { LoginComponent } from "./login/login.component";
     MaterialModule,
     AppRoutingModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatCheckboxModule
     //FlexLayoutModule
   ],
   providers: [
