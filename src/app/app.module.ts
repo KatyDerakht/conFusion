@@ -1,3 +1,6 @@
+//import { MatSideToggleModule } from '@angular/material/slide-toggle';
+import { MatSelectModule } from '@angular/material/select';
+
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,10 +22,13 @@ import {
   MatDialog,
   MatDialogRef,
   MatDialogModule
+  
   //,MatButtonModule
 } from "@angular/material";
 
-import { MaterialModule } from "./material.module";
+import {MaterialModule} from './shared/material.module';
+ 
+//import { MaterialModule } from "./material.module";
 import { DishdetailComponent } from "./dishdetail/dishdetail.component";
 import { MenuComponent } from "./menu/menu.component";
 import { DishService } from "./services/dish.service";
@@ -32,6 +38,8 @@ import { HomeComponent } from "./home/home.component";
 import { AboutComponent } from "./about/about.component";
 import { ContactComponent } from "./contact/contact.component";
 import {FormsModule} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
+
 
 import { LeaderService } from "./services/leader.service";
 import { LoginComponent } from "./login/login.component";
@@ -65,7 +73,11 @@ import { LoginComponent } from "./login/login.component";
     MatDialogModule,
     FormsModule,
     MatFormFieldModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    //MatSidenavModule,
+    //MatSideToggleModule
     //FlexLayoutModule
   ],
   providers: [
