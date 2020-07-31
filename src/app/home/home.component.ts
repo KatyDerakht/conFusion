@@ -4,6 +4,14 @@ import { Component, OnInit } from '@angular/core';
 import {Dish} from '../shared/dish';
 import { PromotionService } from './../services/promotion.service';
 
+import {Leader} from '../shared/leader';
+import {LEADERS} from '../shared/leaders';
+
+import {LeaderService} from '../services/leader.service';
+import {Location}  from '@angular/common';
+import {Params ,ActivatedRoute}  from '@angular/router';
+
+
 
 
 @Component({
@@ -13,18 +21,26 @@ import { PromotionService } from './../services/promotion.service';
 })
 export class HomeComponent implements OnInit {
 
+ // leaders : Leader[];
+  leader : Leader;
+
   dish : Dish;
   promotion:Promotion;
 
   constructor(
     private dishService : DishService ,
-    private promotionService : PromotionService   
+    private promotionService : PromotionService,
+    private leaderService : LeaderService,
+    private location : Location,
+    private route : ActivatedRoute  
   ) { }
 
   ngOnInit() {
 
     this.dish = this.dishService.getFeaturedDish();
     this.promotion =this.promotionService.getFeaturedPromotion();
+    //this.leaders = this.leaderService.getLeaders();
+    this.leader = this.leaderService.getFeaturedLeader();
   }
 
 }
