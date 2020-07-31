@@ -1,3 +1,4 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 //import { MatSideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 
@@ -43,6 +44,9 @@ import {ReactiveFormsModule} from '@angular/forms';
 
 import { LeaderService } from "./services/leader.service";
 import { LoginComponent } from "./login/login.component";
+
+
+
 
 
 
