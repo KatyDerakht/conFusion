@@ -22,9 +22,7 @@ import {
   MatGridListModule,
   MatDialog,
   MatDialogRef,
-  MatDialogModule
-  
-  //,MatButtonModule
+  MatDialogModule,
 } from "@angular/material";
 
 import {MaterialModule} from './shared/material.module';
