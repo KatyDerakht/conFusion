@@ -8,12 +8,21 @@ import {
 } from "@angular/forms";
 
 import { Feedback } from "../shared/Feedback";
+import {flyInOut} from '../animations/app.animation';
 
 @Component({
   selector: "app-contact",
   templateUrl: "./contact.component.html",
   styleUrls: ["./contact.component.scss"],
+  host :{
+    '[@flyInOut]' : 'true',
+    'style' : 'display : block;'
+  },
+  animations : [
+    flyInOut()
+  ]
 })
+
 export class ContactComponent implements OnInit {
   feedbackForm: FormGroup;
   feedback: Feedback;

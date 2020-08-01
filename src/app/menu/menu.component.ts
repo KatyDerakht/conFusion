@@ -5,13 +5,23 @@ import {Dish} from '../shared/dish';
 import { MatListModule } from '@angular/material/list';
 import {MaterialModule} from '../shared/material.module';
 
+import {flyInOut ,expand } from '../animations/app.animation';
+
 ///import {DISHES} from '../shared/dishes';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss']
+  styleUrls: ['./menu.component.scss'],
+  host :{
+    '[@flyInOut]' : 'true',
+    'style' : 'display : block;'
+  },
+  animations : [
+    flyInOut() ,expand()
+  ]
 })
+
 export class MenuComponent implements OnInit {
  
    dishes: Dish[];

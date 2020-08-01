@@ -10,15 +10,22 @@ import {LEADERS} from '../shared/leaders';
 import {LeaderService} from '../services/leader.service';
 import {Location}  from '@angular/common';
 import {Params ,ActivatedRoute}  from '@angular/router';
-
-
+import {flyInOut ,expand} from '../animations/app.animation';
 
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  host :{
+    '[@flyInOut]' : 'true',
+    'style' : 'display : block;'
+  },
+  animations : [
+    flyInOut() ,expand()
+  ]
 })
+
 export class HomeComponent implements OnInit {
 
  // leaders : Leader[];
