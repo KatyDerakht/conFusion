@@ -46,6 +46,7 @@ import { LoginComponent } from "./login/login.component";
 import {HttpClientModule} from '@angular/common/http';
 
 import {baseURL} from './shared/baseurl';
+import {ProcessHTTPMsgService   } from './services/process-httpmsg.service';
 
 
 
@@ -88,6 +89,7 @@ import {baseURL} from './shared/baseurl';
     DishService,
     PromotionService,
     LeaderService,
+    ProcessHTTPMsgService,
   ,{provide: 'BaseURL', useValue: baseURL}
   ],entryComponents: [
     LoginComponent
