@@ -1,11 +1,19 @@
 import { DishService } from './../services/dish.service';
 import { Component, OnInit,Input } from '@angular/core';
-
+import {  ViewChild } from "@angular/core";
 import {Params ,ActivatedRoute}  from '@angular/router';
 import {Location}  from '@angular/common';
 
 import {Dish} from '../shared/dish';
 import {switchMap  } from 'rxjs/operators';
+import { Comment } from '../shared/comment';
+import {
+  FormBuilder,
+  FormsModule,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
+
 
 
 @Component({
@@ -18,11 +26,41 @@ export class DishdetailComponent implements OnInit {
   dishIds : string[];
   prev : string;
   next : string;
+  dishcopy = null;
+  currentDate : any;
+
+  comment: Comment;
+  commentForm: FormGroup;
+  @ViewChild("fform") commentFormDirective;
+
+
+  errMess: string;
+  formErrors = {
+    'author': '',
+    'rating': '',
+    'comment': ''
+  };
+
+validationMessages = {
+    'author': {
+      'required': 'Author Name is required.',
+      'minlength': 'Author Name must be at least 2 characters long.',
+      'maxlength': 'Author Name cannot be more than 25 characters long.'
+    },
+    'rating': {
+      'required': 'Rating is required.'
+    },
+    'comment': {
+      'required': 'Comment is required.'
+    }
+  };
    
   constructor(
     private dishService : DishService,
     private location : Location,
-    private route : ActivatedRoute
+    private route : ActivatedRoute,
+    private fb: FormBuilder,
+    
   ) { }
 
   ngOnInit() {
@@ -32,6 +70,10 @@ export class DishdetailComponent implements OnInit {
  this.route.params.pipe(switchMap((params : Params )=>
    this.dishService.getDish (params['id'])))
    .subscribe(dish =>{this.dish = dish; this.setPrevNext(dish.id);});
+
+   this.createForm();
+   this.currentDate = new Date().toISOString();
+   
   }
 
 
@@ -42,13 +84,62 @@ export class DishdetailComponent implements OnInit {
     this.next =  this.dishIds[(this.dishIds.length + index +1) %this.dishIds.length];
   }
 
+  
   goBack()
   {
     this.location.back();
   }
   
  // @Input() dish : Dish;
- 
+
+ createForm() {
+  this.commentForm = this.fb.group({
+    author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
+    comment: ['', [Validators.required, Validators.minLength(1)] ],
+    rating: 5
+  });
+
+  this.commentForm.valueChanges
+  .subscribe(data => this.onValueChanged(data));
+
+  this.onValueChanged(); // (re)set validation messages now
+}
+
+onValueChanged(data?: any) {
+  if (!this.commentForm) { return; }
+  const form = this.commentForm;
+  for (const field in this.formErrors ) {
+    if (this.formErrors.hasOwnProperty(field)) {
+      // clear previous error message (if any)
+      this.formErrors[field] = '';
+      const control = form.get(field);
+      if (control && control.dirty && !control.valid) {
+        const messages = this.validationMessages[field];
+        for (const key in control.errors) {
+          if (control.errors.hasOwnProperty(key)) {
+            this.formErrors[field] += messages[key] + ' ';
+          }
+        }
+      }
+    }
+  }
+}
+
+onSubmit() {
+  this.comment = this.commentForm.value;
+  this.comment.date = new Date().toISOString();
+  console.log(this.comment);
+
+  this.dishcopy.comments.push(this.comment); 
+  this.dishcopy.save() 
+    .subscribe(dish => { this.dish = dish; console.log(this.dish); }); 
+
+  this.commentForm.reset({
+    author: '',
+    rating: 5,
+    comment: ''
+  });
+}
 
 
 
