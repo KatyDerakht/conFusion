@@ -1,6 +1,6 @@
 import { Promotion } from './../shared/promotion';
 import { DishService } from './../services/dish.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Inject } from '@angular/core';
 import {Dish} from '../shared/dish';
 import { PromotionService } from './../services/promotion.service';
 
@@ -32,7 +32,8 @@ export class HomeComponent implements OnInit {
     private promotionService : PromotionService,
     private leaderService : LeaderService,
     private location : Location,
-    private route : ActivatedRoute  
+    private route : ActivatedRoute ,
+    @Inject('BaseURL') public BaseURL 
   ) { }
 
   ngOnInit() {

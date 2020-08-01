@@ -43,8 +43,9 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { LeaderService } from "./services/leader.service";
 import { LoginComponent } from "./login/login.component";
 
+import {HttpClientModule} from '@angular/common/http';
 
-
+import {baseURL} from './shared/baseurl';
 
 
 
@@ -78,6 +79,7 @@ import { LoginComponent } from "./login/login.component";
     MatCheckboxModule,
     ReactiveFormsModule,
     MatSelectModule,
+    HttpClientModule
     //MatSidenavModule,
     //MatSideToggleModule
     //FlexLayoutModule
@@ -86,7 +88,7 @@ import { LoginComponent } from "./login/login.component";
     DishService,
     PromotionService,
     LeaderService,
-    //,{provide: 'BaseURL', useValue: baseURL}
+  ,{provide: 'BaseURL', useValue: baseURL}
   ],entryComponents: [
     LoginComponent
 ],

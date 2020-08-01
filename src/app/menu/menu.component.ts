@@ -1,5 +1,5 @@
 import { DishService } from './../services/dish.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,Inject } from '@angular/core';
 import {Dish} from '../shared/dish';
 
 import { MatListModule } from '@angular/material/list';
@@ -14,23 +14,28 @@ import {MaterialModule} from '../shared/material.module';
 })
 export class MenuComponent implements OnInit {
  
-  //dishes: Dish[] = DISHES;
-
-  //selectedDish = this.dishes[0];
    dishes: Dish[];
-   selectedDish : Dish;
-
-  constructor(
-    private dishService  : DishService) { }
-
-  ngOnInit() {
+   
+   constructor(private dishService: DishService,
+    @Inject('BaseURL') public BaseURL) { }
+  
+    ngOnInit() {
 
     this.dishService.getDishes()
       .subscribe(dishes => this.dishes = dishes);
   }
 
-  onSelect(dish : Dish)
+
+}
+
+/*   onSelect(dish : Dish)
   {
   this.selectedDish = dish;
-  }
-}
+  } */
+
+    //dishes: Dish[] = DISHES;
+
+  //selectedDish = this.dishes[0];
+
+
+  //selectedDish : Dish;

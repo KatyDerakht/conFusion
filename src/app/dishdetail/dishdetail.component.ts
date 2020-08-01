@@ -1,5 +1,5 @@
 import { DishService } from './../services/dish.service';
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit,Input,Inject } from '@angular/core';
 import {  ViewChild } from "@angular/core";
 import {Params ,ActivatedRoute}  from '@angular/router';
 import {Location}  from '@angular/common';
@@ -60,6 +60,7 @@ validationMessages = {
     private location : Location,
     private route : ActivatedRoute,
     private fb: FormBuilder,
+    @Inject('BaseURL') public BaseURL
     
   ) { }
 
