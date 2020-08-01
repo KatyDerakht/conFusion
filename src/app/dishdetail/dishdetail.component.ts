@@ -28,6 +28,7 @@ export class DishdetailComponent implements OnInit {
   next : string;
   dishcopy = null;
   currentDate : any;
+  dishCopy : Dish;
   
 
   comment: Comment;
@@ -71,7 +72,8 @@ validationMessages = {
  .subscribe((dishIds) => this.dishIds =dishIds);
  this.route.params.pipe(switchMap((params : Params )=>
    this.dishService.getDish (params['id'])))
-   .subscribe(dish =>{this.dish = dish; this.setPrevNext(dish.id);}//);
+   .subscribe(dish =>{this.dish = dish; this.dishCopy = dish; 
+    this.setPrevNext(dish.id);}//);
    ,errmess => this.errMess = <any> errmess);
    this.createForm();
    this.currentDate = new Date().toISOString();
@@ -130,19 +132,41 @@ onValueChanged(data?: any) {
 onSubmit() {
   this.comment = this.commentForm.value;
   this.comment.date = new Date().toISOString();
+  this.dishCopy.comments.push(this.comment);
+  this.dishService.putDish(this.dishCopy)
+    .subscribe(dish => {
+      this.dish = dish; this.dishCopy = dish;
+    },
+    errmess => {this.dish = null; this.dishCopy = null; this.errMess = <any>errmess; });
+  console.log(this.comment);
+  this.comment = null;
+  this.commentForm.reset({
+    author: '',
+    comment: '',
+    rating: 5
+  });
+}
+}
+
+/* onSubmit() {
+  this.comment = this.commentForm.value;
+  this.comment.date = new Date().toISOString();
   console.log(this.comment);
 
-  this.dishcopy.comments.push(this.comment); 
-  this.dishcopy.save() 
+  this.dishCopy.comments.push(this.comment);
+  this.dishService.putDish(this.dishCopy)
+  .subscribe (dish => {
+    this.dish= this.dishCopy; this.dish= this.dish;
+  }),
+  errmess => { this.dish = null; this.dishcopy = null; this.errMess = <any>errmess; }
+ this.dishcopy.save() 
     .subscribe(dish => { this.dish = dish; console.log(this.dish); }); 
-
+ 
   this.commentForm.reset({
     author: '',
     rating: 5,
     comment: ''
   });
 }
+ */
 
-
-
-}
