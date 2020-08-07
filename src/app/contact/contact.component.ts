@@ -8,7 +8,8 @@ import {
 } from "@angular/forms";
 
 import { Feedback } from "../shared/Feedback";
-import {flyInOut} from '../animations/app.animation';
+import {flyInOut , expand} from '../animations/app.animation';
+import {FeedbackService} from '../services/feedback.service';
 
 @Component({
   selector: "app-contact",
@@ -26,6 +27,8 @@ import {flyInOut} from '../animations/app.animation';
 export class ContactComponent implements OnInit {
   feedbackForm: FormGroup;
   feedback: Feedback;
+  feedbackcopy: Feedback;
+  errMess: string;
   contactType = ContactType;
 
   @ViewChild("fform") feedbackFormDirective;
@@ -59,8 +62,14 @@ export class ContactComponent implements OnInit {
   };
   
 
-  constructor(private fb: FormBuilder) {
+  isLoading: boolean;
+  isShowingResponse: boolean;  
+
+  constructor(private fb: FormBuilder,
+    private feedbackService: FeedbackService ) {
     this.createForm();
+    this.isLoading = false;
+    this.isShowingResponse = false;
   }
 
   ngOnInit() {}
@@ -97,40 +106,59 @@ export class ContactComponent implements OnInit {
   
 
 
-onValueChanged  (data? : any )
-    {
-      if (!this.feedbackForm) { return; }
-      const form = this.feedbackForm;
+  onValueChanged(data?: any) {
+    if (!this.feedbackForm) {
+      return;
+    }
+    const form = this.feedbackForm;
     for (const field in this.formErrors) {
       if (this.formErrors.hasOwnProperty(field)) {
-// clear previous error message (if any)
-this.formErrors[field] = '';
-const control = form.get(field);
-if (control && control.dirty && !control.valid) {
-  const messages = this.validationMessages[field];
-  for (const key in control.errors) {
-    if (control.errors.hasOwnProperty(key)) {
-      this.formErrors[field] += messages[key] + ' ';
+        // clear previous error message (if any)
+        this.formErrors[field] = '';
+        const control = form.get(field);
+        if (control && control.dirty && !control.valid) {
+          const messages = this.validationMessages[field];
+          for (const key in control.errors) {
+            if (control.errors.hasOwnProperty(key)) {
+              this.formErrors[field] += messages[key] + ' ';
+            }
+          }
+        }
+      }
     }
   }
-}
-}
-}
+
+onSubmit() {
+  this.isLoading = true;
+  this.feedback = this.feedbackForm.value;
+  this.feedbackService.submitFeedback(this.feedback)
+    .subscribe(feedback => {
+        this.feedback = feedback;
+        console.log(this.feedback);
+      } ,
+      errmess => {
+        this.feedback = null;
+        this.feedbackcopy = null;
+        this.errMess = <any>errmess;
+      } ,
+      () => {
+        this.isShowingResponse = true;
+        setTimeout(() => {
+            this.isShowingResponse = false;
+            this.isLoading = false;
+          } , 5
+        );
+      })
+  ;
+  this.feedbackForm.reset({
+    firstname: '' ,
+    lastname: '' ,
+    telnum: '' ,
+    email: '' ,
+    agree: false ,
+    contacttype: 'None' ,
+    message: ''
+  });
 }
 
-  onSubmit() {
-    this.feedback = this.feedbackForm.value;
-    console.log(this.feedback);
-    this.feedbackForm.reset({
-      firstname: "",
-      lastname: "",
-      telnum: 0,
-      email: "",
-      agree: false,
-      contacttype: "None",
-      message: "",
-    });
-
-    this.feedbackFormDirective.resetForm();
-  }
 }

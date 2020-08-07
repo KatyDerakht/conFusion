@@ -1,14 +1,7 @@
-<!-- <div class="container"
+<div class="container"
   fxLayout="column"
   fxLayoutGap="10px">
- -->
 
- <div class="container"
-     fxLayout="row"
-     fxLayout.sm="column"
-     fxLayout.xs="column"
-     fxLayoutAlign.gt-md="space-around center"
-     fxLayoutGap="10px">
   <div fxFlex>
     <div>
         <h3>About Us</h3>
@@ -46,7 +39,7 @@
       </div>
     </div>
   </div>
-  
+
   <div fxFlex>
     <mat-card>
       <blockquote>
@@ -60,30 +53,29 @@
     </mat-card>
   </div>
 
-
- <!-- <div fxFlex> 
+  <div fxFlex>
     <h2>Corporate Leadership</h2>
-    <p>Display the details of the corporate leaders here</p> -->
-    <div fxFlex *ngIf = "leaders" [@expand]>
-      <h2>Corporate Leadership</h2>
-      <mat-list *ngIf="leaders"  [@expand]>
-        <mat-list-item *ngFor="let leader of leaders">
-          <img mat-list-avatar src={{leader.image}} alt={{leader.name}}>
-          <p mat-line>
-            <span> {{leader.name}}</span>
-          </p>
-          <p mat-line>
-            <span> {{leader.designation}}</span>
-          </p>
-          <p mat-line>
-            <span> {{leader.description}}</span>
-          </p>
-        </mat-list-item>
-      </mat-list>
-    </div>
-    <div fxFlex [hidden] ="leaders">
-      <mat-spinner> </mat-spinner><h4> Loading .... Please Wait </h4>
-    
-      </div>
+    <mat-list *ngIf="leaders"  [@expand]>
+      <mat-list-item *ngFor="let leader of leaders">
+        <img mat-list-avatar src="{{ BaseURL  + leader.image}}" alt={{leader.name}}>     
+         <p mat-line>
+          <span> {{leader.name}}</span>
+        </p>
+        <p mat-line>
+          <span> {{leader.designation}}</span>
+        </p>
+        <p mat-line>
+          <span> {{leader.description}}</span>
+        </p>
+      </mat-list-item>
+    </mat-list>
   </div>
-<!-- </div> -->
+  <div [hidden]="leaders || errMess">
+    <mat-spinner></mat-spinner>
+    <h4>Loading . . . Please Wait</h4>
+  </div>
+  <div fxFlex *ngIf="errMess">
+    <h2>Error</h2>
+    <h4>{{errMess}}</h4>
+  </div>
+</div>
